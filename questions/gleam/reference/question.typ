@@ -46,6 +46,41 @@
     - Arithmetic: `+`, `-`, `*`, `/`, `%`
     - Comparison: `==`, `!=`, `<`, `<=`, `>`, `>=`
     - Boolean: `&&`, `||`, `!`
+    - Strings: `<>` joins two strings
+
+    *Custom types and records*
+
+    ```text
+    pub type Shape {
+      Circle(name: String, radius: Int)
+      Square(name: String, side: Int)
+    }
+
+    pub type Box(a) {
+      Box(label: String, item: a)
+    }
+    ```
+
+    `Circle` and `Square` are the variants of `Shape`. Call a variant to make
+    a value, such as `Square("tile", 2)`.
+
+    `Box(a)` has a type variable `a`, so `Box("n", 7)` has type `Box(Int)`.
+
+    `shape.name` works because every variant has `name` in the same position
+    with the same type. For other fields, use `case`:
+
+    ```text
+    case shape {
+      Circle(_, r) -> 2 * r
+      Square(_, s) -> s
+    }
+    ```
+
+    In a pattern, `_` ignores one field, and `..` ignores the rest, as in
+    `Square(..)`.
+
+    `Box(..b, item: 8)` is a record update: a new `Box` with the same fields as
+    `b` except `item`. `b` itself is unchanged.
   ],
   [
     *Case expressions and patterns*
@@ -83,7 +118,22 @@
     - `list.filter(xs, keep)` keeps values satisfying `keep`.
     - `list.length(xs)` returns a list's length.
     - `int.absolute_value(n)` returns an integer's absolute value.
+    - `int.to_string(n)` converts an integer to a string.
 
     Import their modules with `import gleam/list` or `import gleam/int`.
+
+    *Results and dicts*
+
+    `Result(value, error)` has two variants: `Ok(value)` for success and
+    `Error(error)` for failure. `Nil` is a value that holds no information.
+
+    `import gleam/dict.{type Dict}` lets you write `Dict(k, v)`, a dict with
+    keys of type `k` and values of type `v`. Dicts are immutable.
+
+    - `dict.new()` is an empty dict.
+    - `dict.from_list(pairs)` builds a dict from a list of `#(k, v)` tuples.
+    - `dict.insert(d, k, v)` returns a new dict where `k` maps to `v`.
+    - `dict.get(d, k)` returns `Ok(v)` if `k` maps to `v`, or `Error(Nil)` if
+      `k` is not a key.
   ],
 )

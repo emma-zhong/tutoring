@@ -11,6 +11,9 @@ A `Nested(a)` value is either an `Atom` containing one value or a `Group`
 containing a list of nested values. Implement `remove_parens`, which removes
 all `Group` boundaries and returns the atoms from left to right.
 
+`list.append(xs, ys)` returns a new list containing the elements of `xs`
+followed by the elements of `ys`.
+
 ```gleam
 import gleam/list
 
